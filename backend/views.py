@@ -21,13 +21,18 @@ class CreateUrl(View):
                 shortenedUrl = generateUrl()
                 newUrl = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl)
                 newUrl.save()
-                return HttpResponse("I'm good")
+                createdUrl = "http://localhost:8000/" + shortenedUrl
+                return render(request, "backend/shortened.html", {"createdUrl": createdUrl})
             else:
                 
                 return HttpResponse("I'm good too")
         else:
             
             return HttpResponse("I'm good too")
+        
+        
+
+        
         
 class RedirectToOriginal(View):
     def get(self, request, shortenedUrl):
