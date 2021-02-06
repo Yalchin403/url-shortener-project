@@ -4,9 +4,11 @@ from backend.forms import TaskForm
 from backend.utils import generateUrl
 from backend.models import ShortenedUrl
 from django.http import HttpResponse
+import requests
 
 
 # Create your views here.
+
 class CreateUrl(View):
     def get(self, request):
         form = TaskForm()
@@ -16,19 +18,35 @@ class CreateUrl(View):
         form = TaskForm(request.POST)
         if form.is_valid():
             originalUrl = form.cleaned_data.get('originalUrl')
-            if originalUrl[0:4] == "http":
-                
-                shortenedUrl = generateUrl()
-                newUrl = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl)
-                newUrl.save()
-                createdUrl = "http://localhost:8000/" + shortenedUrl
-                return render(request, "backend/shortened.html", {"createdUrl": createdUrl})
+            try:
+                if originalUrl[0:4] != "http":
+                    originalUrl = "http://" + originalUrl                
+                requests.get(originalUrl)
+                is_url = True
+
+            except:
+                is_url = False
+
+            if is_url == True:
+                try:
+                    alreacy_have = ShortenedUrl.objects.get(originalUrl = originalUrl)
+                    shortenedUrl = alreacy_have.shortenedUrl
+                    return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
+                except:
+                    # if alreacy_have:
+                    #     shortenedUrl = alreacy_have.shortenedUrl
+                    #     return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
+                    shortenedUrl = generateUrl()
+                    new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl)
+                    new_object.save()
+                    createdUrl = "http://localhost:8000/" + shortenedUrl
+                    return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
             else:
                 
-                return HttpResponse("I'm good too")
+                return HttpResponse("Hmmmm, cheating?")
         else:
             
-            return HttpResponse("I'm good too")
+            return HttpResponse("Form is not valid !")
         
         
 
@@ -37,8 +55,7 @@ class CreateUrl(View):
 class RedirectToOriginal(View):
     def get(self, request, shortenedUrl):
         try:
-            qs = ShortenedUrl.objects.filter(shortenedUrl = shortenedUrl)
-            obj = qs[0]
+            obj = ShortenedUrl.objects.get(shortenedUrl = shortenedUrl)
             originalUrl = obj.originalUrl
             return redirect(originalUrl)
         except:
