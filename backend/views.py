@@ -26,6 +26,7 @@ class CreateUrl(View):
 
             except:
                 is_url = False
+            # line 21-28 can probably be replaced with: if requests.get(originalUrl).status_code == 200: is_url = true, else false 
 
             if is_url == True:
                 try:
