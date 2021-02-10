@@ -29,6 +29,7 @@ class CreateUrl(View):
             except:
                 print("There was an error with request.. sorry")
                 is_url = False
+            # line 21-28 can probably be replaced with: if requests.get(originalUrl).status_code == 200: is_url = true, else false 
 
             if is_url == True:
                 try:
