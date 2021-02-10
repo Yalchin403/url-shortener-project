@@ -21,10 +21,13 @@ class CreateUrl(View):
             try:
                 if originalUrl[0:4] != "http":
                     originalUrl = "http://" + originalUrl                
-                requests.get(originalUrl)
+                requests.get(originalUrl, headers={
+"User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+})
                 is_url = True
 
             except:
+                print("There was an error with request.. sorry")
                 is_url = False
 
             if is_url == True:
@@ -33,9 +36,6 @@ class CreateUrl(View):
                     shortenedUrl = alreacy_have.shortenedUrl
                     return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
                 except:
-                    # if alreacy_have:
-                    #     shortenedUrl = alreacy_have.shortenedUrl
-                    #     return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
                     shortenedUrl = generateUrl()
                     new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl)
                     new_object.save()
