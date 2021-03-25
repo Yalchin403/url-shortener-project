@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from backend.forms import TaskForm
 from backend.utils import generateUrl
 from backend.models import ShortenedUrl
 from django.http import HttpResponse
@@ -11,13 +10,11 @@ import requests
 
 class CreateUrl(View):
     def get(self, request):
-        form = TaskForm()
-        content = {"form": form}
-        return render(request, "backend/index.html", content)
+        return render(request, "backend/index.html")
+
     def post(self, request):
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            originalUrl = form.cleaned_data.get('originalUrl')
+        originalUrl = request.POST.get('originalURL')
+        if originalUrl != None:
             try:
                 if originalUrl[0:4] != "http":
                     originalUrl = "http://" + originalUrl                
@@ -27,7 +24,7 @@ class CreateUrl(View):
                 is_url = True
 
             except:
-                print("There was an error with request.. sorry")
+                return render(request, "backend/error.html")
                 is_url = False
             # line 21-28 can probably be replaced with: if requests.get(originalUrl).status_code == 200: is_url = true, else false 
 
@@ -44,10 +41,10 @@ class CreateUrl(View):
                     return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
             else:
                 
-                return HttpResponse("Hmmmm, cheating?")
+                return render(request, "backend/error.html")
         else:
             
-            return HttpResponse("Form is not valid !")
+            return render(request, "backend/error.html")
         
         
 
@@ -60,6 +57,6 @@ class RedirectToOriginal(View):
             originalUrl = obj.originalUrl
             return redirect(originalUrl)
         except:
-            return HttpResponse("You are trying to access non-exsisting url.. Please check the url that you entered.")
+            return render(request, "backend/error.html")
     
     
