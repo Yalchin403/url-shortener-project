@@ -6,14 +6,13 @@ from django.http import HttpResponse
 import requests
 
 
-# Create your views here.
-
 class CreateUrl(View):
     def get(self, request):
         return render(request, "backend/index.html")
 
     def post(self, request):
         originalUrl = request.POST.get('originalURL')
+        title = request.POST.get('title')
         if originalUrl != None:
             try:
                 if originalUrl[0:4] != "http":
@@ -35,7 +34,7 @@ class CreateUrl(View):
                     return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
                 except:
                     shortenedUrl = generateUrl()
-                    new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl)
+                    new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl, title=title)
                     new_object.save()
                     createdUrl = "http://localhost:8000/" + shortenedUrl
                     return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
