@@ -123,7 +123,7 @@ input[type=submit]:hover {
         {% for url in urls %}
         <tr>
 					<td>{{url.title}}</td>
-					<td>https://shrt-url.ml{{url.shortenedUrl}}</td>
+					<td>https://shrt-url.ml/{{url.shortenedUrl}}</td>
 					<td>{{url.originalUrl}}</td>
 				</tr>
         {% endfor %}
