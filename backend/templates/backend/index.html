@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,6 +7,22 @@
 <style>
 * {
   box-sizing: border-box;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
 
 input[type=text], select, textarea {
@@ -93,5 +111,27 @@ input[type=submit]:hover {
   </form>
 </div>
 
+{% if request.user.is_authenticated %}
+  <h2>Shortened URL History</h2>
+		<section>
+			<table>
+				<tr>
+					<th>Title</th>
+					<th>Shortened URL</th>
+					<th>Original URL</th>
+				</tr>
+        {% for url in urls %}
+        <tr>
+					<td>{{url.title}}</td>
+					<td>https://shrt-url.ml{{url.shortenedUrl}}</td>
+					<td>{{url.originalUrl}}</td>
+				</tr>
+        {% endfor %}
+      </table>
+    </section>
+  {% endif %}
+
+
 </body>
 </html>
+{% endblock %}
