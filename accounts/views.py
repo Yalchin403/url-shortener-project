@@ -39,7 +39,7 @@ class SignIn(View):
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user_obj = User.objects.get(username=username)
+        
         user = authenticate(request, username=username, password=password)
 
         if user is not None:

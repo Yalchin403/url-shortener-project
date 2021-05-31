@@ -35,23 +35,16 @@ class CreateUrl(View):
             except:
                 return render(request, "backend/error.html")
                 is_url = False
-            # line 21-28 can probably be replaced with: if requests.get(originalUrl).status_code == 200: is_url = true, else false 
 
             if is_url == True:
-                try:
-                    alreacy_have = ShortenedUrl.objects.get(originalUrl = originalUrl)
-                    shortenedUrl = alreacy_have.shortenedUrl
-                    return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
-                except:
-                    shortenedUrl = generateUrl()
-                    if request.user.is_authenticated:
-                        owner = request.user
-                        new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl, title=title, owner=owner)
-                    else:
-                        new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl, title=title)
-                    new_object.save()
-                    createdUrl = "http://localhost:8000/" + shortenedUrl
-                    return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
+                shortenedUrl = generateUrl()
+                if request.user.is_authenticated:
+                    owner = request.user
+                    new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl, title=title, owner=owner)
+                else:
+                    new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl, title=title)
+                new_object.save()
+                return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
             else:
                 
                 return render(request, "backend/error.html")
