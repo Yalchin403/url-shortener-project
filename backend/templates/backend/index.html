@@ -12,7 +12,6 @@
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 100%;
 }
 
 td, th {
@@ -88,9 +87,10 @@ input[type=submit]:hover {
 </head>
 <body>
 
-<h2>Paste Your URL And Get Shorter One</h2>
+
 
 <div class="container">
+  <h2>Paste Your URL And Get Shorter One</h2>
   <form method="POST" action="/">
     {% csrf_token %}
     <div class="row">
@@ -99,21 +99,30 @@ input[type=submit]:hover {
       </div>
       <div class="col-75">
         <input type="text" id="fname" name="originalURL" placeholder="Original URL...">
+      </div>
+
+
+      <div class="col-25">
+        <label for="fname">Title</label>
+      </div>
+      <div class="col-75">
         {%if request.user.is_authenticated%}
         <input type="text" id="fname" name="title" placeholder="Title To Remember...">
         {% endif %}
       </div>
+
     </div>
 
     <div class="row"> <br>
       <input type="submit" value="Shorten">
     </div>
   </form>
-</div>
 
-{% if request.user.is_authenticated %}
+  {% if request.user.is_authenticated %}
+  <br>
   <h2>Shortened URL History</h2>
 		<section>
+      <div style="overflow-x:auto;">
 			<table>
 				<tr>
 					<th>Title</th>
@@ -128,8 +137,13 @@ input[type=submit]:hover {
 				</tr>
         {% endfor %}
       </table>
+    </div>
     </section>
   {% endif %}
+
+</div>
+
+
 
 
 </body>
