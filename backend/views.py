@@ -45,7 +45,7 @@ class CreateUrl(View):
                 return redirect("backend:generate-url")
 
             if is_url == True:
-                if len(originalUrl) <=17:
+                if len(copy_of_url) <= 26:
                     messages.success(request, f'{copy_of_url}, is already short...')
                     return redirect("backend:generate-url")
                 shortenedUrl = generateUrl()
@@ -57,7 +57,7 @@ class CreateUrl(View):
                 new_object.save()
                 return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
         
-        
+
 class RedirectToOriginal(View):
     def get(self, request, shortenedUrl):
         try:
@@ -65,6 +65,9 @@ class RedirectToOriginal(View):
             originalUrl = obj.originalUrl
             return redirect(originalUrl)
         except:
-            return render(request, "backend/error.html")
+            return redirect('https://http.cat/404')
+            
+    def post(self, request):
+        return redirect('https://http.cat/405')
     
     
