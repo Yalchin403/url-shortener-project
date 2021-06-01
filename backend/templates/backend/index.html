@@ -102,20 +102,24 @@ input[type=submit]:hover {
       </div>
 
 
-      <div class="col-25">
-        <label for="fname">Title</label>
-      </div>
-      <div class="col-75">
+      
+      
         {%if request.user.is_authenticated%}
-        <input type="text" id="fname" name="title" placeholder="Title To Remember...">
+        <div class="col-25">
+          <label for="fname">Title</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="fname" name="title" placeholder="Title To Remember...">
+        </div>
         {% endif %}
-      </div>
-
+      
     </div>
+<br>
 
-    <div class="row"> <br>
+    <div class="row">
       <input type="submit" value="Shorten">
     </div>
+
   </form>
 
   {% if request.user.is_authenticated %}
