@@ -4,6 +4,7 @@ from backend.utils import generateUrl
 from backend.models import ShortenedUrl
 from django.http import HttpResponse
 import requests
+from django.contrib import messages
 
 
 class CreateUrl(View):
@@ -20,10 +21,17 @@ class CreateUrl(View):
 
     def post(self, request):
         originalUrl = request.POST.get('originalURL')
+        copy_of_url = originalUrl
+
         title = request.POST.get('title')
         if not title:
             title = "Not Mentioned"
-        if originalUrl != None:
+
+        if originalUrl == "":
+            messages.success(request, 'You cannot submit empty URL...')
+            return redirect("backend:generate-url")
+
+        else:
             try:
                 if originalUrl[0:4] != "http":
                     originalUrl = "http://" + originalUrl                
@@ -33,10 +41,13 @@ class CreateUrl(View):
                 is_url = True
 
             except:
-                return render(request, "backend/error.html")
-                is_url = False
+                messages.success(request, f'{copy_of_url}, is not valid URL...')
+                return redirect("backend:generate-url")
 
             if is_url == True:
+                if len(originalUrl) <=17:
+                    messages.success(request, f'{copy_of_url}, is already short...')
+                    return redirect("backend:generate-url")
                 shortenedUrl = generateUrl()
                 if request.user.is_authenticated:
                     owner = request.user
@@ -45,15 +56,6 @@ class CreateUrl(View):
                     new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl, title=title)
                 new_object.save()
                 return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
-            else:
-                
-                return render(request, "backend/error.html")
-        else:
-            
-            return render(request, "backend/error.html")
-        
-        
-
         
         
 class RedirectToOriginal(View):

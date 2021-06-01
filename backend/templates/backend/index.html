@@ -24,6 +24,14 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+.messages {
+            background-color: rgb(238, 230, 230);
+            color: rgb(230, 36, 36);
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+
 input[type=text], select, textarea {
   width: 100%;
   padding: 12px;
@@ -115,7 +123,9 @@ input[type=submit]:hover {
       
     </div>
 <br>
-
+        {% for message in messages %}
+        <p class="messages" >{{message}}</p>
+        {% endfor %} <br>
     <div class="row">
       <input type="submit" value="Shorten">
     </div>
