@@ -10,7 +10,7 @@ class CreateUrl(View):
     def get(self, request):
         if request.user.is_authenticated:
             current_user = request.user
-            owner_urls = ShortenedUrl.objects.filter(owner=current_user)
+            owner_urls = ShortenedUrl.objects.filter(owner=current_user).order_by('-createdTime')
             context = {
                 "urls": owner_urls,
 
