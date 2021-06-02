@@ -5,6 +5,7 @@ from backend.models import ShortenedUrl
 from django.http import HttpResponse
 import requests
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 
 class CreateUrl(View):
@@ -28,7 +29,7 @@ class CreateUrl(View):
             title = "Not Mentioned"
 
         if originalUrl == "":
-            messages.success(request, 'You cannot submit empty URL...')
+            messages.error(request, 'You cannot submit empty URL...')
             return redirect("backend:generate-url")
 
         else:
@@ -41,12 +42,12 @@ class CreateUrl(View):
                 is_url = True
 
             except:
-                messages.success(request, f'{copy_of_url}, is not valid URL...')
+                messages.error(request, f'{copy_of_url}, is not valid URL...')
                 return redirect("backend:generate-url")
 
             if is_url == True:
                 if len(copy_of_url) <= 26:
-                    messages.success(request, f'{copy_of_url}, is already short...')
+                    messages.error(request, f'{copy_of_url}, is already short...')
                     return redirect("backend:generate-url")
                 shortenedUrl = generateUrl()
                 if request.user.is_authenticated:
@@ -67,7 +68,18 @@ class RedirectToOriginal(View):
         except:
             return redirect('https://http.cat/404')
             
-    def post(self, request):
+    def post(self, request, shortenedUrl):
         return redirect('https://http.cat/405')
+
+class DeleteUrl(View):
+    def get(self, request, pk):
+        return redirect('https://http.cat/405')
+    
+    def post(self, request, pk):
+        url_obj = get_object_or_404(ShortenedUrl, pk=pk)
+        if url_obj.owner != request.user:
+            return redirect('https://http.cat/403')
+        url_obj.delete()
+        return redirect('backend:generate-url')
     
     

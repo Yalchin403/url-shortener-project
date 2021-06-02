@@ -142,12 +142,20 @@ input[type=submit]:hover {
 					<th>Title</th>
 					<th>Shortened URL</th>
 					<th>Original URL</th>
+          <th>Action</th>
 				</tr>
         {% for url in urls %}
         <tr>
 					<td>{{url.title}}</td>
 					<td>https://shrt-url.ml/{{url.shortenedUrl}}</td>
 					<td>{{url.originalUrl}}</td>
+          <td>
+          <form method="POST" action={% url 'backend:delete-url' url.id %} >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          
+        </td>
 				</tr>
         {% endfor %}
       </table>
