@@ -141,13 +141,19 @@ input[type=submit]:hover {
 				<tr>
 					<th>Title</th>
 					<th>Shortened URL</th>
+          <th>Copy URL</th>
 					<th>Original URL</th>
           <th>Action</th>
 				</tr>
         {% for url in urls %}
         <tr>
 					<td>{{url.title}}</td>
-					<td>https://shrt-url.ml/{{url.shortenedUrl}}</td>
+					<td data-type="url">https://shrt-url.ml/{{url.shortenedUrl}}</td>
+          <td>
+            <button type="button" data-type="copy" class="btn btn-info">Copy</button>
+          </button>
+          </td>
+          
 					<td>{{url.originalUrl}}</td>
           <td>
           <form method="POST" action={% url 'backend:delete-url' url.id %} >
@@ -167,7 +173,27 @@ input[type=submit]:hover {
 
 
 
-
 </body>
+<script>
+document.querySelectorAll('button[data-type="copy"]')
+  .forEach(function(button){
+      button.addEventListener('click', function(){
+      let url = this.parentNode.parentNode
+        .querySelector('td[data-type="url"]')
+        .innerText;
+      
+      let tmp = document.createElement('textarea');
+          tmp.value = url;
+          tmp.setAttribute('readonly', '');
+          tmp.style.position = 'absolute';
+          tmp.style.left = '-9999px';
+          document.body.appendChild(tmp);
+          tmp.select();
+          document.execCommand('copy');
+          document.body.removeChild(tmp);
+          console.log(`${url} copied.`);
+    });
+});
+</script>
 </html>
 {% endblock %}

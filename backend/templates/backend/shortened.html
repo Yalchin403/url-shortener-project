@@ -12,8 +12,9 @@
 <div class="jumbotron text-center">
 	<h1 class="display-3">Thank You!</h1>
 	<p class="lead">
-		<strong>Click on the button below</strong> to directly go to the original url that you just pasted or copy to share:<br> <code>https://shrt-url.ml/{{createdUrl}}</code>
+		<strong>Click on the button below</strong> to directly go to the original url that you just pasted or copy to share:<br> <code id="shortnedUrl">https://shrt-url.ml/{{createdUrl}}</code><button type="button" onclick="myFunction()" class="btn btn-info">Copy</button>
 	</p>
+	<a href="{% url 'backend:generate-url' %}"><input class="btn btn-primary" type="button" value="Create New URL +"></a>
 	<hr>
 		<p>
     Having trouble? 
@@ -25,5 +26,16 @@
 	</div>
 
 </body>
+<script>
+function myFunction() {
+                    var range = document.createRange();
+                    range.selectNode(document.getElementById("shortnedUrl"));
+                    window.getSelection().removeAllRanges(); // clear current selection
+                    window.getSelection().addRange(range); // to select text
+                    document.execCommand("copy");
+                    window.getSelection().removeAllRanges();// to deselect
+                }
+            </script>
+</script>
 </html>
 {% endblock %}
