@@ -34,6 +34,7 @@ function myFunction() {
                     window.getSelection().addRange(range); // to select text
                     document.execCommand("copy");
                     window.getSelection().removeAllRanges();// to deselect
+					alert(`${range} copied.`);
                 }
             </script>
 </script>

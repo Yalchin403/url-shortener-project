@@ -12,5 +12,5 @@ class ShortenedUrl(models.Model):
     
     def __str__(self):
         if self.title:
-            return self.title
+            return self.title + ' - ' +self.owner.username
         return self.originalUrl
