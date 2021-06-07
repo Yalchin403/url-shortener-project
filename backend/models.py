@@ -11,7 +11,6 @@ class ShortenedUrl(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
-        if self.title:
-            if self.owner:
-                return self.title + ' - ' +self.owner.username
+        if self.owner:
+            return self.title + ' - ' +self.owner.username
         return self.originalUrl
