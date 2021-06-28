@@ -47,7 +47,7 @@ class SignIn(View):
             return redirect('backend:generate-url')
             
         else:
-            messages.info(request, 'Email or password invalid')
+            messages.info(request, 'Username or password invalid')
             return render(request, 'accounts/signin.html')
 
         messages.error(request, "Your account is not active!")
