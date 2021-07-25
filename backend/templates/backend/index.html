@@ -99,7 +99,7 @@ input[type=submit]:hover {
 
 <div class="container">
   <h2>Paste Your URL And Get Shorter One</h2>
-  <form method="POST" action="/">
+  <!-- <form method="POST" action="/">
     {% csrf_token %}
     <div class="row">
       <div class="col-25">
@@ -130,6 +130,23 @@ input[type=submit]:hover {
       <input type="submit" value="Shorten">
     </div>
 
+  </form> -->
+  <form method="POST" action="/">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="fname" >URL</label>
+      <input class="form-control" type="text" id="fname" name="originalURL" placeholder="Original URL...">
+    </div>
+
+    {%if request.user.is_authenticated%}
+    <div class="form-group">
+      <label for="fname" >Title</label>
+      <input class="form-control" type="text" id="fname" name="title" placeholder="Title To Remember...">
+    <br>
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">Shorten</button>
   </form>
 
   {% if request.user.is_authenticated %}

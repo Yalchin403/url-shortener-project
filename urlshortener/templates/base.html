@@ -2,37 +2,56 @@
 {% load static %}
 <html lang="en">
 <head>
-    <link rel="apple-touch-icon" href="/custom_icon.png"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
     <title>URL SHORTENER</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
-    <link rel="icon" href="{% static 'faviconn.ico' %}" type="image/x-icon">
 
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+    <link rel="stylesheet" href="comments.css">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#563d7c">
+    <script src="{% static "jquery/jquery.min.js"  %}"></script>
+    <script src="{% static "jquery-ui/jquery-ui.min.js"  %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <!-- Favicons -->
-  <link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
-  <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
-  <meta name="theme-color" content="#563d7c">
-</head>
+    </head>
 <body>
   <header>
+
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-        <a class="navbar-brand" href="{% url 'backend:generate-url' %}">URL SHORTENER</a>
-        {% if user.is_authenticated %}
-            <a class="nav-item nav-link" href="">{{request.user.username}}</a>
-            <a class="nav-item nav-link" href="{% url 'accounts:signOut' %}">Log out</a>
-        {%else%}
-            <a class="nav-item nav-link" href="{% url 'accounts:signUp' %}">Sign up</a>
-            <a class="nav-item nav-link" href="{% url 'accounts:signIn' %}">Sign in</a>
-        {%endif%}
-        
+      <a class="navbar-brand" href="{% url 'backend:generate-url' %}">URL SHORTENER</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+            <a class="nav-link" href="">{{request.user.username}}</a>
+            <a class="nav-link" href="{% url 'accounts:signOut' %}">Log out</a>
+          {%else%}
+            <a class="nav-link" href="{% url 'accounts:signUp' %}">Sign up</a>
+            <a class="nav-link" href="{% url 'accounts:signIn' %}">Sign in</a>
+          {%endif%}
+        </div>
+      </div>
     </nav>
+
+
+    
   </header>
 </body>
 </html>
