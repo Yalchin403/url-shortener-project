@@ -99,38 +99,7 @@ input[type=submit]:hover {
 
 <div class="container">
   <h2>Paste Your URL And Get Shorter One</h2>
-  <!-- <form method="POST" action="/">
-    {% csrf_token %}
-    <div class="row">
-      <div class="col-25">
-        <label for="fname">URL</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="fname" name="originalURL" placeholder="Original URL...">
-      </div>
 
-
-      
-      
-        {%if request.user.is_authenticated%}
-        <div class="col-25">
-          <label for="fname">Title</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="fname" name="title" placeholder="Title To Remember...">
-        </div>
-        {% endif %}
-      
-    </div>
-<br>
-        {% for message in messages %}
-        <p class="messages" >{{message}}</p>
-        {% endfor %} <br>
-    <div class="row">
-      <input type="submit" value="Shorten">
-    </div>
-
-  </form> -->
   <form method="POST" action="/">
     {% csrf_token %}
     <div class="form-group">
@@ -147,6 +116,11 @@ input[type=submit]:hover {
     {% endif %}
 
     <button type="submit" class="btn btn-primary">Shorten</button>
+    <div class="messages" >
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+  </div>
   </form>
 
   {% if request.user.is_authenticated %}
