@@ -116,11 +116,13 @@ input[type=submit]:hover {
     {% endif %}
 
     <button type="submit" class="btn btn-primary">Shorten</button>
+    {% if messages %}
     <div class="messages" >
     {% for message in messages %}
     {{message}}
     {% endfor %}
-  </div>
+    </div>
+    {% endif %}
   </form>
 
   {% if request.user.is_authenticated %}
