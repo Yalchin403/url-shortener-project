@@ -35,8 +35,9 @@ class CreateUrl(View):
         else:
             try:
                 if originalUrl[0:4] != "http":
-                    originalUrl = "http://" + originalUrl                
-                requests.get(originalUrl, headers={
+                    originalUrl = "http://" + originalUrl
+
+                requests.get(originalUrl, verify=False, headers={
 "User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
 })
                 is_url = True
@@ -57,7 +58,7 @@ class CreateUrl(View):
                     new_object = ShortenedUrl(originalUrl = originalUrl, shortenedUrl = shortenedUrl, title=title)
                 new_object.save()
                 return render(request, "backend/shortened.html", {"createdUrl": shortenedUrl})
-        
+
 
 class RedirectToOriginal(View):
     def get(self, request, shortenedUrl):
@@ -67,19 +68,17 @@ class RedirectToOriginal(View):
             return redirect(originalUrl)
         except:
             return redirect('https://http.cat/404')
-            
+
     def post(self, request, shortenedUrl):
         return redirect('https://http.cat/405')
 
 class DeleteUrl(View):
     def get(self, request, pk):
         return redirect('https://http.cat/405')
-    
+
     def post(self, request, pk):
         url_obj = get_object_or_404(ShortenedUrl, pk=pk)
         if url_obj.owner != request.user:
             return redirect('https://http.cat/403')
         url_obj.delete()
         return redirect('backend:generate-url')
-    
-    
