@@ -55,7 +55,7 @@ class DeletePaste(View):
     def get(self, request, pk):
         return redirect('https://http.cat/405')
 
-    def delete(self, request, pk):
+    def post(self, request, pk):
         paste_obj = get_object_or_404(PasteZone, pk=pk)
         if paste_obj.owner != request.user:
             return redirect('https://http.cat/403')
