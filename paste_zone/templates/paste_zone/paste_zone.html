@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% block content %}
+ {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<link href="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css" rel="stylesheet">
+<script src="/static/ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.messages {
+            background-color: rgb(243, 164, 164);
+            color: rgb(230, 36, 36);
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+
+
+<div class="container">
+  <h2>Paste and Share!</h2>
+
+  <form name="insertedForm" id="newForm" method="POST" action="/paste/zone">
+      {% csrf_token %}
+      <textarea name="pasteContent" cols="40" rows="5" class="form-control" required id="id_content"></textarea>
+
+    {%if request.user.is_authenticated%}
+    <div class="form-group">
+      <label for="fname" >Title</label>
+      <input class="form-control" type="text" id="fname" name="title" placeholder="Title To Remember...">
+    </div>
+
+    {% endif %}
+    <div class="form-group">
+      <br>
+      <button type="submit" class="btn btn-primary">Paste</button>
+    </div>
+
+    {% if messages %}
+    <div class="messages" >
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+    </div>
+    {% endif %}
+  </form>
+
+  {% if request.user.is_authenticated %}
+  <br>
+  <h2>Your PastZone HIstory</h2>
+		<section>
+      <div style="overflow-x:auto;">
+			<table>
+				<tr>
+					<th>Title</th>
+					<th>Link URL</th>
+          <th>Copy URL</th>
+          <th>Action</th>
+				</tr>
+        {% for paste in pastes %}
+        <tr>
+					<td>{{paste.title}}</td>
+					<td data-type="paste">https://shrt-url.ml/paste/zone{{paste.slug}}</td>
+          <td>
+            <button type="button" data-type="copy" class="btn btn-info">Copy</button>
+          </td>
+
+          <td>
+          <form method="POST" action={% url 'paste_zone:delete-paste' paste.id %} >
+            {% csrf_token %}
+            <button onclick="return confirm('Are you sure you want to delete this item?');" type="submit" class="btn btn-danger">Delete</button>
+          </form>
+
+        </td>
+				</tr>
+        {% endfor %}
+      </table>
+    </div>
+    </section>
+  {% endif %}
+
+</div>
+
+
+
+</body>
+<script>
+document.querySelectorAll('button[data-type="copy"]')
+  .forEach(function(button){
+      button.addEventListener('click', function(){
+      let paste = this.parentNode.parentNode
+        .querySelector('td[data-type="paste"]')
+        .innerText;
+
+      let tmp = document.createElement('textarea');
+          tmp.value = paste;
+          tmp.setAttribute('readonly', '');
+          tmp.style.position = 'absolute';
+          tmp.style.left = '-9999px';
+          document.body.appendChild(tmp);
+          tmp.select();
+          document.execCommand('copy');
+          document.body.removeChild(tmp);
+          console.log(`${paste} copied.`);
+          alert(`${paste} copied.`);
+    });
+});
+</script>
+
+<script>
+  var exclude = "dialogui,dialog,a11yhelp,about,bidi,blockquote,clipboard," +
+"copy,button,panelbutton,panel,floatpanel,colordialog,menu," +
+"contextmenu,dialogadvtab,div,elementspath,enterkey,entities,popup," +
+"filebrowser,find,fakeobjects,flash,floatingspace,richcombo," +
+"font,forms,horizontalrule,htmlwriter,iframe,indent," +
+"indentblock,indentlist,justify,liststyle,magicline," +
+"newpage,pagebreak,pastefromword,pastetext,pasteasplaintext,paste,preview,print," +
+"resize,save,menubutton,scayt,selectall,showblocks," +
+"showborders,specialchar,stylescombo,tab," +
+"tabletools,templates,toolbar,undo,wsc";
+
+    CKEDITOR.replace("pasteContent", {
+ extraPlugins: 'codesnippet',
+ codeSnippet_theme: 'monokai_sublime',
+ removePlugins: exclude,
+});
+
+</script>
+
+</html>
+{% endblock %}

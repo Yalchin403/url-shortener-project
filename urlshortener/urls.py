@@ -22,5 +22,6 @@ from django.conf import settings
 urlpatterns = [
     path('admin/dashboard', admin.site.urls),
     path('', include("backend.urls")),
+    path('paste/', include("paste_zone.urls")),
     path('accounts/', include('accounts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

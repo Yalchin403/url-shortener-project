@@ -35,6 +35,8 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'accounts',
     'backend',
+    'paste_zone',
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,6 +131,45 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_CONFIGS = {
+         # django-ckeditor uses the default configuration by default
+    'default': {
+                 # Editor width adaptive
+        'width':'auto',
+        'height':'250px',
+                 # Tab key to convert the number of spaces
+        'tabSpaces': 4,
+                 # Toolbar style
+        'toolbar': 'Custom',
+                 # Toolbar button
+        'toolbar_Custom': [
+                         # Emoji code block
+            ['Smiley', 'CodeSnippet'],
+            ['Format'],
+                         # Font style
+            ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
+                         # font color
+            ['TextColor', 'BGColor'],
+                         # Link
+            ['Link', 'Unlink'],
+                         # List
+            ['NumberedList', 'BulletedList'],
+                         # Maximize
+            ['Maximize'],
+            [ 'Source' ],
+            ['Table', 'Tabletools'],
+            ['Image']
+        ],
+                 # Add code block plugin
+
+        'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils', 'table','clipboard', 'format', 'image', 'tabletools']),
+
+    }
+}
+
 try:
     from .local_settings import *
 except ImportError:
