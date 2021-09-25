@@ -10,6 +10,6 @@ class PasteZone(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     createdTime = models.DateTimeField(auto_now_add=True) # won't be seen in admin as it's not editable
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
          return self.title
