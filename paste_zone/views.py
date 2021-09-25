@@ -44,7 +44,8 @@ class CreatePaste(View):
 class DetailView(View):
 
     def get(self, request, slug):
-        paste_obj = PasteZone.objects.get(slug = slug)
+        paste_obj = PasteZone.objects.get(slug=slug)
+
         context = {
             "paste": paste_obj
         }
