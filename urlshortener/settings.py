@@ -132,14 +132,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_CONFIGS = {
          # django-ckeditor uses the default configuration by default
     'default': {
                  # Editor width adaptive
         'width':'auto',
-        'height':'250px',
+        'height':'500px',
                  # Tab key to convert the number of spaces
         'tabSpaces': 4,
                  # Toolbar style
