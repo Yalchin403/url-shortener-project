@@ -1,19 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-
-{% block mycss %}
-
-<title>Shortened URL</title><!-- CSS only -->
-
-
-<!-- Bootstrap core CSS -->
+  {% block mycss %}
+  	<title>PASTE ZONE</title><!-- CSS only -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="{% static 'paste.ico' %}" type="image/x-icon">
 <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<!-- Favicons -->
-<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-<meta name="theme-color" content="#563d7c">
-
 <style media="screen">
 .container {
   border-radius: 5px;
@@ -22,41 +15,35 @@
 }
 </style>
 {% endblock %}
-
 <body>
-	
 
-
-		<div class="jumbotron text-center">
-			<h1 class="display-3">Thank You!</h1>
-			<p class="lead">
-				<strong>Click on the button below</strong> to directly go to the original url that you just pasted or copy to share:<br> <code id="shortnedUrl">https://shrt-url.ml/{{createdUrl}}</code><button type="button" style="margin:2px;" onclick="myFunction()" class="btn btn-info">Copy</button>
-			</p>
-			<a href="{% url 'backend:generate-url' %}"><input class="btn btn-primary" type="button" value="Create New URL +"></a>
-			<hr>
-				<p>
-			Having trouble?
-					<a href="https://yalchin.info">Contact me</a>
-				</p>
-				<p class="lead">
-					<a class="btn btn-primary btn-sm" href="{{ createdUrl }}" role="button">Go to shortened URL</a>
-				</p>
-			</div>
+	<div class="jumbotron text-center">
+	<h1 class="display-3">Thank You!</h1>
+	<p class="lead">
+		<strong>Click on the button below</strong> to directly go to the original url that you just pasted or copy to share:<br> <code id="shortnedUrl">https://shrt-url.ml/{{createdUrl}}</code><button type="button" style="margin:2px;" onclick="myFunction()" class="btn btn-info">Copy</button>
+	</p>
+	<a href="{% url 'backend:generate-url' %}"><input class="btn btn-primary" type="button" value="Create New URL +"></a>
+	<hr>
+		<p>
+    Having trouble?
+			<a href="https://yalchin.info">Contact me</a>
+		</p>
+		<p class="lead">
+			<a class="btn btn-primary btn-sm" href="{{ createdUrl }}" role="button">Go to shortened URL</a>
+		</p>
+	</div>
 
 </body>
-
-
 <script>
-function myFunction() {
-                    var range = document.createRange();
-                    range.selectNode(document.getElementById("shortnedUrl"));
-                    window.getSelection().removeAllRanges(); // clear current selection
-                    window.getSelection().addRange(range); // to select text
-                    document.execCommand("copy");
-                    window.getSelection().removeAllRanges();// to deselect
-					alert(`${range} copied.`);
-                }
+	function myFunction() {
+						var range = document.createRange();
+						range.selectNode(document.getElementById("shortnedUrl"));
+						window.getSelection().removeAllRanges(); // clear current selection
+						window.getSelection().addRange(range); // to select text
+						document.execCommand("copy");
+						window.getSelection().removeAllRanges();// to deselect
+						alert(`${range} copied.`);
+					}
 </script>
-
-
+</html>
 {% endblock %}
