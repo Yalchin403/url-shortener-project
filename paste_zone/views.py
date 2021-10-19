@@ -26,8 +26,13 @@ class CreatePaste(View):
         slug = generateSlug()
         owner = None
 
+        if not content:
+            messages.error(request, 'Content should not be empty...')
+            return redirect("paste_zone:generate-paste")
+
         if not title:
             title = "Not Mentioned"
+
         if request.user.is_authenticated:
             owner = request.user
 

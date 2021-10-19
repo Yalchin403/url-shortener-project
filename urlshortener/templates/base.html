@@ -11,9 +11,9 @@
 
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
       <a class="navbar-brand" href="{% url 'backend:generate-url' %}">URL SHORTENER</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <button onclick="openOrCloseNav()" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button onclick="openOrCloseNav()">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
@@ -34,7 +34,19 @@
 
   {% block content %}
   {% endblock %}
+<script>
+  function openOrCloseNav() {
+  let className = document.getElementById('navbarNavAltMarkup').className;
 
+  if (className == "collapse navbar-collapse" ) {
+    document.getElementById('navbarNavAltMarkup').className = "navbar-collapse collapse show";
+  }
+  else {
+    console.log("Here");
+    document.getElementById('navbarNavAltMarkup').className = "collapse navbar-collapse";
+  }
+ }
+</script>
 </body>
 
 <footer class="text-muted">
