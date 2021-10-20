@@ -130,6 +130,14 @@ input[type=submit]:hover {
     margin-top: 0;
   }
 }
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headertekst {
+  text-align: center;
+}
 </style>
 {% endblock %}
 <body>
@@ -167,10 +175,13 @@ input[type=submit]:hover {
 
   {% if request.user.is_authenticated %}
   <br>
-  <h2>Your PastZone HIstory</h2>
+  <h2 class="headertekst">Your PastZone History</h2><br>
+
+
 		<section>
       <div style="overflow-x:auto;">
-			<table>
+
+			<table class="center">
 				<tr>
 					<th>Title</th>
 					<th>Link URL</th>
