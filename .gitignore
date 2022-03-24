@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
 **/media/
+backend/__pycache__
+accounts/__pycache__
+paste_zone/__pycache__
+urlshortener/__pycache__
 **/static/
 ### Django ###
 **/migrations/**
