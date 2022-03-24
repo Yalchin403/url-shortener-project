@@ -49,13 +49,19 @@ class CreatePaste(View):
 class DetailView(View):
 
     def get(self, request, slug):
-        paste_obj = PasteZone.objects.get(slug=slug)
 
-        context = {
-            "paste": paste_obj
-        }
-        return render(request, "paste_zone/detail_view.html", context)
+        try:
+            paste_obj = PasteZone.objects.get(slug=slug)
 
+            context = {
+                "paste": paste_obj
+            }
+
+            return render(request, "paste_zone/detail_view.html", context)
+
+        except:
+
+            return redirect('https://http.cat/404')
 
 class DeletePaste(View):
     def get(self, request, pk):
