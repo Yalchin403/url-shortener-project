@@ -140,7 +140,7 @@ CKEDITOR_CONFIGS = {
     'default': {
                  # Editor width adaptive
         'width':'auto',
-        'height':'500px',
+        'height':'250px',
                  # Tab key to convert the number of spaces
         'tabSpaces': 4,
                  # Toolbar style
@@ -152,7 +152,7 @@ CKEDITOR_CONFIGS = {
             ['Format'],
                          # Font style
             ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
-                         # font color
+                         # font color 
             ['TextColor', 'BGColor'],
                          # Link
             ['Link', 'Unlink'],
@@ -160,13 +160,49 @@ CKEDITOR_CONFIGS = {
             ['NumberedList', 'BulletedList'],
                          # Maximize
             ['Maximize'],
-            [ 'Source' ],
+            ['Source'],
             ['Table', 'Tabletools'],
             ['Image']
         ],
-                 # Add code block plugin
-
-        'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils', 'table','clipboard', 'format', 'image', 'tabletools']),
+        # Add code block plugin
+        'codeSnippet_languages': {
+            'python': 'Python <3',
+            'c': 'C',
+            'cpp': 'C++',
+            'csharp': 'C#',
+            'bash': 'Bash',
+            'aspnet': 'ASP.NET',
+            'dart': 'Dart',
+            'docker': 'Docker',
+            'flutter': 'Flutter',
+            'fortran': 'Fortran',
+            'haskel': 'Haskel',
+            'markup': 'HTML',
+            'http': 'HTTP',
+            'git': 'Git',
+            'go': 'Golang',
+            'java': 'Java',
+            'javascript': 'JavaScript',
+            'makefile':'Makefile',
+            'matlab': 'MATLAB',
+            'nginx': 'Nginx',
+            'pascal': 'Pascal',
+            'perl': "Perl",
+            'php': 'PHP',
+            'rust': 'Rust',
+            'ruby': 'Ruby',
+            'r': 'R',
+            'sas': 'SAS',
+            'scala': 'Scala',
+            'scheme': 'Scheme',
+            'sql': 'SQL',
+            'swift': 'Swift',
+            'vim': 'Vim',
+            'yml': 'YML'
+        },
+       
+        'extraPlugins': ','.join(['codesnippet', 'prism', 'widget', 'lineutils', 'table', 'clipboard', 'format',
+                                  'image', 'tabletools']),
 
     }
 }
