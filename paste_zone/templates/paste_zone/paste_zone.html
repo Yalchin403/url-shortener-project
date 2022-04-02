@@ -148,7 +148,7 @@ input[type=submit]:hover {
 
   <h2>Paste and Share!</h2>
 
-  <form name="insertedForm" id="newForm" method="POST" action="/paste/zone">
+  <form name="insertedForm" id="newForm" method="POST" action="/paste/zone/">
       {% csrf_token %}
       <textarea name="pasteContent" cols="40" rows="5" class="form-control" required id="id_content"></textarea>
 
